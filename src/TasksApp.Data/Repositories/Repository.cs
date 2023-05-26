@@ -12,14 +12,9 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEnti
     public Repository(TasksAppContext context) => _context = context;
 
     /// <inheritdoc/>
-    public async Task<TEntity?> GetAsync(Guid id, bool shouldTrackEntity = false, params Expression<Func<TEntity, object>>[] includes)
+    public async Task<TEntity?> GetAsync(Guid id, params Expression<Func<TEntity, object>>[] includes)
     {
-        var query = _context.Set<TEntity>().AsQueryable();
-
-        if (!shouldTrackEntity)
-        {
-            query = query.AsNoTracking();
-        }
+        var query = _context.Set<TEntity>().AsNoTracking();
         
         foreach (var include in includes)
         {
@@ -30,14 +25,9 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEnti
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<TEntity>> GetAllAsync(bool shouldTrackEntity = false, params Expression<Func<TEntity, object>>[] includes)
+    public async Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[] includes)
     {
-        var query = _context.Set<TEntity>().AsQueryable();
-
-        if (!shouldTrackEntity)
-        {
-            query = query.AsNoTracking();
-        }
+        var query = _context.Set<TEntity>().AsNoTracking();
 
         foreach (var include in includes)
         {
@@ -48,11 +38,16 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEnti
     }
 
     /// <inheritdoc/>
-    public async Task CreateAsync(TEntity entity) => await _context.AddAsync(entity);
+    public async Task CreateAsync(TEntity entity)
+    {
+        await _context.AddAsync(entity);
+        await _context.SaveChangesAsync();
+    }
 
     /// <inheritdoc/>
-    public async Task UpdateAsync(TEntity entity) => await Task.Run(() => { _context.Update(entity); });
-
-    /// <inheritdoc/>
-    public async Task SaveChangesAsync() => await _context.SaveChangesAsync();
+    public async Task UpdateAsync(TEntity entity)
+    {
+        _context.Update(entity);
+        await _context.SaveChangesAsync();
+    }
 }
