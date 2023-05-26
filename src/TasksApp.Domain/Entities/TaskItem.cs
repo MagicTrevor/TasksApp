@@ -26,6 +26,18 @@ public class TaskItem : BaseEntity
     }
 
     /// <summary>
+    /// Sets a new description
+    /// </summary>
+    /// <param name="description"></param>
+    public void SetDescription(string description)
+    {
+        if (!string.IsNullOrWhiteSpace(description) && description.Length <= 100)
+        {
+            Description = description;
+        }
+    }
+
+    /// <summary>
     /// Marks the <see cref="TaskItem" /> as complete
     /// </summary>
     public void CompleteTaskItem()
