@@ -59,11 +59,25 @@ public class TaskItemRepositoryTests
 
         //act
         await repository.CreateAsync(new TaskItem("TestCreate"));
-        await repository.SaveChangesAsync();
 
         //assert
         var taskItemsList = await repository.GetAllAsync();
         Assert.Equal(4, taskItemsList.Count());
+    }
+
+    [Fact]
+    public async Task UpdateAsync_Success()
+    {
+        //arrange
+        var repository = await CreateTestRepositoryAsync();
+        var taskItem = await repository.GetAsync(_testGuid);
+        taskItem.SetDescription("UpdateTest");
+
+        //act
+        await repository.UpdateAsync(taskItem);
+
+        //assert
+        Assert.Equal("UpdateTest", taskItem.Description);
     }
 
     /// <summary>
@@ -93,6 +107,7 @@ public class TaskItemRepositoryTests
 
         await context.TaskItems.AddRangeAsync(taskItemsToSeed);
         await context.SaveChangesAsync();
+        context.ChangeTracker.Clear();
 
         _testGuid = taskItemsToSeed.First().Id;
     }
