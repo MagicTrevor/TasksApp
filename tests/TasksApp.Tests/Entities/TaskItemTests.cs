@@ -18,6 +18,45 @@ public class TaskItemTests
     }
 
     [Fact]
+    public void SetDescription_NullValue_NoChange()
+    {
+        //arrange
+        var taskItem = new TaskItem("Test");
+
+        //act
+        taskItem.SetDescription("");
+
+        //assert
+        Assert.Equal("Test", taskItem.Description);
+    }
+
+    [Fact]
+    public void SetDescription_LengthGreaterThan100_NoChange()
+    {
+        //arrange
+        var taskItem = new TaskItem("Test");
+
+        //act
+        taskItem.SetDescription("mjQQWi7y4OY7z1UCQ7meWhaXKpAriHa5zCpWhjN6bO9APxuHIX6pPg55TwIQHYQxFzJk8DvnANpriNxfKmDpHwdwGmIMVnAhq1TeD");
+
+        //assert
+        Assert.Equal("Test", taskItem.Description);
+    }
+
+    [Fact]
+    public void SetDescription_Valid_DescriptionIsSet()
+    {
+        //arrange
+        var taskItem = new TaskItem("Test");
+
+        //act
+        taskItem.SetDescription("Test2");
+
+        //assert
+        Assert.Equal("Test2", taskItem.Description);
+    }
+
+    [Fact]
     public void CompleteTaskItem_IsAlreadyComplete_NoChange()
     {
         //arrange
