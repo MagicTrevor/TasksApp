@@ -4,10 +4,11 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine as build
 WORKDIR /build
-COPY ["TasksAppApp.sln", "./"]
+COPY ["TasksApp.sln", "./"]
 COPY ["src/TasksApp.Api/TasksApp.Api.csproj", "./src/TasksApp.Api/"]
 COPY ["src/TasksApp.Domain/TasksApp.Domain.csproj", "./src/TasksApp.Domain/"]
 COPY ["src/TasksApp.Data/TasksApp.Data.csproj", "./src/TasksApp.Data/"]
+COPY ["tests/TasksApp.Tests/TasksApp.Tests.csproj", "./tests/TasksApp.Tests/"]
 RUN dotnet restore
 COPY . .
 RUN dotnet build -c Release
