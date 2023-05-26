@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using TasksApp.Api.Services;
 using TasksApp.Data;
 using TasksApp.Data.Repositories;
 using TasksApp.Domain.Repositories;
+using TasksApp.Domain.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,7 @@ builder.Services.AddDbContext<TasksAppContext>(options =>
 builder.Services.AddScoped<ITaskItemRepository, TaskItemRepository>();
 
 // Register services
+builder.Services.AddScoped<ITaskItemService, TaskItemService>();
 
 var app = builder.Build();
 
@@ -34,8 +37,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
 
 app.UseCors("corsapp");
 
