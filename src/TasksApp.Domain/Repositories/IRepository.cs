@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using TasksApp.Domain.Entities;
 
 namespace TasksApp.Domain.Repositories;
 
@@ -7,14 +8,14 @@ public interface IRepository<TEntity> where TEntity : class
     /// <summary>
     /// Creates a new <see cref="TEntity"/>
     /// </summary>
-    Task CreateAsync(TEntity entity);
+    Task<TEntity> CreateAsync(TEntity entity);
 
     /// <summary>
     /// Updates the <see cref="TEntity"/>
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    Task UpdateAsync(TEntity entity);
+    Task<TEntity> UpdateAsync(TEntity entity);
 
     /// <summary>
     /// Gets the requested <see cref="TEntity"/> if the id exists
