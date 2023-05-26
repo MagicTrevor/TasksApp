@@ -30,4 +30,10 @@ public interface IRepository<TEntity> where TEntity : class
     /// <param name="includes"></param>
     /// <returns></returns>
     Task<IEnumerable<TEntity>> GetAllAsync(bool shouldTrackEntity = false, params Expression<Func<TEntity, object>>[] includes);
+
+    /// <summary>
+    /// Commits any changes since the last save to the database
+    /// </summary>
+    /// <returns></returns>
+    Task SaveChangesAsync();
 }

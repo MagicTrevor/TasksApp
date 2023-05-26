@@ -7,17 +7,14 @@ namespace TasksApp.Data.Repositories;
 
 public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
 {
-    protected readonly DbSet<TEntity> _entities;
+    protected readonly TasksAppContext _context;
 
-    public Repository(DbSet<TEntity> entities) => _entities = entities;
-
-    /// <inheritdoc/>
-    public async Task CreateAsync(TEntity entity) => await _entities.AddAsync(entity);
+    public Repository(TasksAppContext context) => _context = context;
 
     /// <inheritdoc/>
     public async Task<TEntity?> GetAsync(Guid id, bool shouldTrackEntity = false, params Expression<Func<TEntity, object>>[] includes)
     {
-        var query = _entities.AsQueryable();
+        var query = _context.Set<TEntity>().AsQueryable();
 
         if (!shouldTrackEntity)
         {
@@ -33,12 +30,9 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEnti
     }
 
     /// <inheritdoc/>
-    public async Task UpdateAsync(TEntity entity) => await Task.Run(() => { _entities.Update(entity); });
-
-    /// <inheritdoc/>
     public async Task<IEnumerable<TEntity>> GetAllAsync(bool shouldTrackEntity = false, params Expression<Func<TEntity, object>>[] includes)
     {
-        var query = _entities.AsQueryable();
+        var query = _context.Set<TEntity>().AsQueryable();
 
         if (!shouldTrackEntity)
         {
@@ -52,4 +46,13 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEnti
 
         return await query.ToListAsync();
     }
+
+    /// <inheritdoc/>
+    public async Task CreateAsync(TEntity entity) => await _context.AddAsync(entity);
+
+    /// <inheritdoc/>
+    public async Task UpdateAsync(TEntity entity) => await Task.Run(() => { _context.Update(entity); });
+
+    /// <inheritdoc/>
+    public async Task SaveChangesAsync() => await _context.SaveChangesAsync();
 }
