@@ -20,4 +20,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\TasksApp.Domain\TasksApp.Domain.csproj" />
+    <ProjectReference Include="..\..\src\TasksApp.Data\TasksApp.Data.csproj" />
+  </ItemGroup>
+
 </Project>
