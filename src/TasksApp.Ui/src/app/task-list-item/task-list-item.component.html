@@ -1,0 +1,17 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-subtitle>
+            {{taskItem.createdDate | date: 'short'}}
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        {{taskItem.description}}
+        <span class="spacer"></span>
+        <mat-checkbox class=""
+                  [checked]="taskItem.isComplete"
+                  color="accent"
+                  (change)="complete($event.checked)"
+                  [disabled]="taskItem.isComplete == true">
+    </mat-checkbox>
+    </mat-card-content>
+</mat-card>
