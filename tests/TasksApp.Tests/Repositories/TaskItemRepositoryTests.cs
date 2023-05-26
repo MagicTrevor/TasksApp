@@ -48,7 +48,7 @@ public class TaskItemRepositoryTests
 
         //assert
         Assert.NotNull(taskItem);
-        Assert.Equal(_testGuid, taskItem.Id);
+        Assert.Equal(_testGuid, taskItem!.Id);
     }
 
     [Fact]
@@ -71,7 +71,7 @@ public class TaskItemRepositoryTests
         //arrange
         var repository = await CreateTestRepositoryAsync();
         var taskItem = await repository.GetAsync(_testGuid);
-        taskItem.SetDescription("UpdateTest");
+        taskItem!.SetDescription("UpdateTest");
 
         //act
         await repository.UpdateAsync(taskItem);
