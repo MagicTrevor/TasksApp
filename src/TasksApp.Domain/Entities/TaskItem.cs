@@ -5,6 +5,7 @@ public class TaskItem : BaseEntity
     public string Description { get; private set; }
     public bool IsComplete { get; private set; }
     public DateTime CompletedDate { get; private set; }
+    public DateTime CreatedDate { get; private set; }
 
     /// <summary>
     /// Default constructor for <see cref="TaskItem" />
@@ -19,7 +20,9 @@ public class TaskItem : BaseEntity
         }
 
         Description = description;
-        IsComplete = false;        
+        IsComplete = false;
+
+        CreatedDate = DateTime.Now;
     }
 
     /// <summary>
