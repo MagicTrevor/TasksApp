@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  db:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: db
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Just_for_fun!
+  api:
+    build: .
+    ports:
+      - "8080:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: false
