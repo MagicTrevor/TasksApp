@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using TasksApp.Domain.Entities;
 using TasksApp.Domain.Repositories;
 
-namespace TaskApp.Data.Repositories;
+namespace TasksApp.Data.Repositories;
 
 public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
 {
