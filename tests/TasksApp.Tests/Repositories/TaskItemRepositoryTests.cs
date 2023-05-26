@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TasksApp.Data;
 using TasksApp.Data.Repositories;
 using TasksApp.Domain.Entities;
+using Xunit;
 
 namespace TasksApp.Tests.Repositories;
 
@@ -12,12 +14,56 @@ public class TaskItemRepositoryTests
 {
     private DbContextOptions<TasksAppContext> _dbContextOptions;
 
+    private Guid _testGuid;
+
     public TaskItemRepositoryTests()
     {
         var databaseName = $"TasksApp_{DateTime.Now.ToFileTimeUtc()}";
         _dbContextOptions = new DbContextOptionsBuilder<TasksAppContext>()
             .UseInMemoryDatabase(databaseName)
             .Options;
+    }
+
+    [Fact]
+    public async Task GetAllAsync_Success()
+    {
+        //arrange
+        var repository = await CreateTestRepositoryAsync();
+
+        //act
+        var taskItemsList = await repository.GetAllAsync();
+
+        //assert
+        Assert.Equal(3, taskItemsList.Count());
+    }
+
+    [Fact]
+    public async Task GetAsync_Success()
+    {
+        //arrange
+        var repository = await CreateTestRepositoryAsync();
+
+        //act
+        var taskItem = await repository.GetAsync(_testGuid);
+
+        //assert
+        Assert.NotNull(taskItem);
+        Assert.Equal(_testGuid, taskItem.Id);
+    }
+
+    [Fact]
+    public async Task CreateAsync_Success()
+    {
+        //arrange
+        var repository = await CreateTestRepositoryAsync();
+
+        //act
+        await repository.CreateAsync(new TaskItem("TestCreate"));
+        await repository.SaveChangesAsync();
+
+        //assert
+        var taskItemsList = await repository.GetAllAsync();
+        Assert.Equal(4, taskItemsList.Count());
     }
 
     /// <summary>
@@ -28,7 +74,7 @@ public class TaskItemRepositoryTests
     {
         var context = new TasksAppContext(_dbContextOptions);
         await SeedTestDataAsync(context);
-        return new TaskItemRepository(context.TaskItems);
+        return new TaskItemRepository(context);
     }
 
     /// <summary>
@@ -47,5 +93,7 @@ public class TaskItemRepositoryTests
 
         await context.TaskItems.AddRangeAsync(taskItemsToSeed);
         await context.SaveChangesAsync();
+
+        _testGuid = taskItemsToSeed.First().Id;
     }
 }
