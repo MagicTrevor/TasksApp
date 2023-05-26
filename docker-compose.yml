@@ -9,6 +9,7 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=Just_for_fun!
+      - TZ=$(cat /etc/timezone)
   api:
     build: .
     ports:
@@ -16,3 +17,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: false
+      TZ: $(cat /etc/timezone)
+  app:
+    build: src/TasksApp.Ui
+    ports:
+      - "8000:80"
