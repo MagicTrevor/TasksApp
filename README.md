@@ -6,15 +6,11 @@
 <h4 align="center">A demo project.</h4>
 
 <p align="center">
-  <a href="#key-features">Key Features</a> •
   <a href="#how-to-use">How To Use</a> •
   <a href="#license">License</a>
 </p>
 
-## Key Features
-
-* TasksItem - Create, Update, Complete tasks
-* Runs in Docker
+![image](https://github.com/MagicTrevor/TasksApp/assets/27883110/6431f80a-b930-42ae-8a82-3e41cc775380)
 
 ## How To Use
 
