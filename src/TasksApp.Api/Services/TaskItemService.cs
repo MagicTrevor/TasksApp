@@ -22,7 +22,8 @@ public class TaskItemService : ITaskItemService
     /// <inheritdoc/>
     public async Task<IEnumerable<TaskItem>> GetAllAsync()
     {
-        return await _repository.GetAllAsync();
+        var taskItems = await _repository.GetAllAsync();
+        return taskItems.OrderByDescending(ti => ti.CreatedDate);
     }
 
     /// <inheritdoc/>
