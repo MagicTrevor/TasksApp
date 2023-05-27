@@ -10,7 +10,7 @@
   <a href="#license">License</a>
 </p>
 
-![image](https://github.com/MagicTrevor/TasksApp/assets/27883110/6431f80a-b930-42ae-8a82-3e41cc775380)
+![image](https://github.com/MagicTrevor/TasksApp/assets/27883110/0395038d-7ded-46eb-b16d-fd95a7e7f2d1)
 
 ## How To Use
 
