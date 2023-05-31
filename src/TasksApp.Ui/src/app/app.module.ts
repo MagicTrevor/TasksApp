@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'; 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +17,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TaskListComponent } from './task-list/task-list.component';
 import { TaskListItemComponent } from './task-list-item/task-list-item.component';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from './shared/auth.service';
+import { AuthInterceptor } from './shared/authconfig.interceptor';
 
 @NgModule({
   declarations: [AppComponent, TaskListComponent, TaskListItemComponent],
@@ -35,7 +37,11 @@ import { FormsModule } from '@angular/forms';
     MatCheckboxModule,
     FormsModule
   ],
-  providers: [ApiHttpClientService],
+  providers: [AuthService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }, ApiHttpClientService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
