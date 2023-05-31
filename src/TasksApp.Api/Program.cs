@@ -108,7 +108,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Setup Jwt Token Endpoint
-app.MapPost("/security/token", [AllowAnonymous] (User user) =>
+app.MapPost("/api/security/token", [AllowAnonymous] (User user) =>
 {
     if (user.Username=="test" && user.Password=="test")
     {
@@ -160,19 +160,19 @@ app.MapPost("/security/token", [AllowAnonymous] (User user) =>
 });
 
 // Setup TaskItems endpoints
-app.MapGet("/tasks", [Authorize] async (ITaskItemService service) => await service.GetAllAsync());
-app.MapGet("/tasks/{id:Guid}", [Authorize] async (ITaskItemService service, Guid id) =>
+app.MapGet("/api/tasks", [Authorize] async (ITaskItemService service) => await service.GetAllAsync());
+app.MapGet("/api/tasks/{id:Guid}", [Authorize] async (ITaskItemService service, Guid id) =>
 {
     var task = await service.GetAsync(id);
     return task is null ? Results.NotFound() : Results.Ok(task);
 });
 
-app.MapPost("/tasks", [Authorize] async (ITaskItemService service, TaskItem itemToCreate) => 
+app.MapPost("/api/tasks", [Authorize] async (ITaskItemService service, TaskItem itemToCreate) => 
 {
     var task = await service.CreateAsync(itemToCreate);
     return Results.Created($"/tasks/{task.Id}", task);
 });
-app.MapPut("/tasks/{id:Guid}/description", [Authorize] async (ITaskItemService service, Guid id, string description) => await service.UpdateDescription(id, description));
-app.MapPut("/tasks/{id:Guid}/complete", [Authorize] async (ITaskItemService service, Guid id) => await service.MarkComplete(id));
+app.MapPut("/api/tasks/{id:Guid}/description", [Authorize] async (ITaskItemService service, Guid id, string description) => await service.UpdateDescription(id, description));
+app.MapPut("/api/tasks/{id:Guid}/complete", [Authorize] async (ITaskItemService service, Guid id) => await service.MarkComplete(id));
 
 app.Run();
