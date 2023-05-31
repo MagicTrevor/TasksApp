@@ -11,7 +11,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
   
   login(user: User) {
-    let api = 'http://localhost:5266/api/security/token';
+    let api = 'http://localhost:8008/api/security/token';
 
     return this.http
       .post<string>(api, user)

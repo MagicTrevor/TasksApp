@@ -16,8 +16,6 @@ using TasksApp.Domain.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-
 // add jwt
 builder.Services.AddAuthentication(options =>
 {

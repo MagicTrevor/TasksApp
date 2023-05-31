@@ -15,18 +15,18 @@ export class ApiHttpClientService {
     }
 
     public getTaskItems() {
-        return this.http.get<TaskItem[]>("http://localhost:5266/api/tasks/");
+        return this.http.get<TaskItem[]>("http://localhost:8008/api/tasks/");
     }
 
     public create(item: TaskItem) {
-        return this.http.post<TaskItem>("http://localhost:5266/api/tasks/", item);
+        return this.http.post<TaskItem>("http://localhost:8008/api/tasks/", item);
     }
 
     public updateDescription(id: string, description: string) {
-        return this.http.put<TaskItem>(`http://localhost:5266/api/tasks/${id}/description?description=$(description)`, null);
+        return this.http.put<TaskItem>(`http://localhost:8008/api/tasks/${id}/description?description=$(description)`, null);
     }
 
     public complete(id: string) {
-        return this.http.put<TaskItem>(`http://localhost:5266/api/tasks/${id}/complete`, null);
+        return this.http.put<TaskItem>(`http://localhost:8008/api/tasks/${id}/complete`, null);
     }
 }
