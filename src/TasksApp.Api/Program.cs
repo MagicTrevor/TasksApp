@@ -87,7 +87,7 @@ builder.Services.AddScoped<ITaskItemService, TaskItemService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName is "DockerDevelop")
 {
     app.UseSwagger();
     app.UseSwaggerUI();
